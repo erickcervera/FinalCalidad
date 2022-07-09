@@ -1,0 +1,70 @@
+﻿@{
+    List<Cuenta> cuentitas = ((List<Cuenta>)Model);
+}
+
+<h1>Lista de cuentas</h1>
+
+<div>
+    <h5>Dolares: $ @ViewBag.Dolares</h5>
+    <h5>Soles: S. @ViewBag.Soles</h5>
+    <h5 class="alert-light">Total: S. @ViewBag.Total</h5>
+    <a href="/Home/Registrar" class="btn btn-primary">Crear Cuenta</a>
+</div>
+<br />
+<div class="row">
+    <div class="col">
+        <table id="tabla" class="table">
+            <thead class="text-center">
+                <tr>
+                    <th>Categoria</th>
+                    <th>Moneda</th>
+                    <th>Nombre</th>
+                    <th>Saldo</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                @foreach (var item in cuentitas)
+                {
+                    <tr>
+                        @if (item.IdCategoria == 1)
+                        {
+                            <td>Propio</td>
+                        }
+                        else
+                        {
+                            <td>Credito</td>
+                        }
+
+                        @if (item.IdMoneda == 1)
+                        {
+                            <td>Soles</td>
+                        }
+                        else
+                        {
+                            <td>Dolares</td>
+                        }
+                        <td class="text-center">
+                            @if (item.IdCategoria == 2)
+                            {
+                                <strong>Limite</strong> @string.Format("{0:N2}", item.Limite)
+                                <br />
+                            }
+                            @if (item.IdMoneda == 1)
+                            {
+                                <strong>Saldo</strong> @string.Format("{0:N2}", item.Saldo)<span> S/.</span>
+                            }
+                            @if (item.IdMoneda == 2)
+                            {
+                                <strong>Saldo</strong> @string.Format("{0:N2}", item.Saldo)<span> $/.</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="/transaccion/index?id=@item.Id">Acciones</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
